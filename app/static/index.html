@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paris Pathfinding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css">
+<script src="https://unpkg.com/deck.gl@9.0.38/dist.min.js"></script>
+</head>
+<body>
+<div id="carte"></div>
+
+<aside id="panneau">
+  <header>
+    <h1>Paris <span>Pathfinding</span></h1>
+    <p class="sous-titre">Comparer les algorithmes de plus court chemin sur les vraies rues de Paris</p>
+  </header>
+
+  <section class="bloc">
+    <div class="champ" data-cible="depart">
+      <span class="pastille a">A</span>
+      <input id="in-depart" type="text" placeholder="Adresse de départ (ou clic sur la carte)" autocomplete="off">
+      <ul class="suggestions"></ul>
+    </div>
+    <button id="inverser" class="icone" title="Inverser départ / arrivée" aria-label="Inverser">⇅</button>
+    <div class="champ" data-cible="arrivee">
+      <span class="pastille b">B</span>
+      <input id="in-arrivee" type="text" placeholder="Adresse d'arrivée (ou clic sur la carte)" autocomplete="off">
+      <ul class="suggestions"></ul>
+    </div>
+  </section>
+
+  <section class="bloc">
+    <label class="titre">Mode de transport</label>
+    <div class="segment" id="modes">
+      <button data-mode="pied" class="actif">À pied</button>
+      <button data-mode="velo">Vélo</button>
+      <button data-mode="voiture">Voiture</button>
+    </div>
+    <p class="note" id="note-mode"></p>
+  </section>
+
+  <section class="bloc">
+    <label class="titre">Algorithme animé</label>
+    <div class="segment algos" id="algos">
+      <button data-algo="dijkstra" class="actif"><i style="--c:#22d3ee"></i>Dijkstra</button>
+      <button data-algo="astar"><i style="--c:#f472b6"></i>A*</button>
+      <button data-algo="greedy"><i style="--c:#fbbf24"></i>Glouton</button>
+      <button data-algo="bfs"><i style="--c:#4ade80"></i>BFS</button>
+      <button data-algo="tous"><i class="multi"></i>Tous</button>
+    </div>
+    <label class="titre ligne">Vitesse d'animation <output id="out-vitesse">×1</output></label>
+    <input type="range" id="vitesse" min="-3" max="3" step="1" value="0">
+  </section>
+
+  <button id="lancer" class="principal" disabled>Calculer l'itinéraire</button>
+
+  <section id="resultats" hidden>
+    <label class="titre">Comparaison <span class="note" id="critere"></span></label>
+    <table>
+      <thead><tr><th>Algo</th><th>Distance</th><th>Durée</th><th>Explorés</th><th>Calcul</th><th>Écart</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <p class="note">Cliquez sur une ligne pour rejouer l'animation de cet algorithme.</p>
+  </section>
+</aside>
+
+<div id="statut" class="statut">Chargement…</div>
+<div id="compteur" class="compteur" hidden></div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
